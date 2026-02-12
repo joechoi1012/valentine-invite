@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffdde1;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; 
+}
+.container { text-align: center; }
+h1 { color: #d63384; font-size: 2rem; margin-bottom: 20px;}
+button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    margin: 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+#yesBtn { background-color: #28a745; color: white; }
+#noBtn { background-color: #dc3545; color: white; position: absolute; }
