@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Link Generator</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #ffe6eb; }
+        .card { max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h2 { color: #d63384; text-align: center; }
+        label { font-weight: bold; display: block; margin-top: 15px; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #d63384; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #b02a6b; }
+        #result { margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 8px; word-break: break-all; display: none; }
+        a { color: #d63384; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>💌 Link Generator</h2>
+        
+        <label>Question:</label>
+        <input type="text" id="question" value="Will you be my Valentine? 🌹">
+
+        <label>Yes Button Text:</label>
+        <input type="text" id="yesText" value="Yes">
+
+        <label>No Button Text:</label>
+        <input type="text" id="noText" value="No">
+
+        <label>Success Action:</label>
+        <select id="type" onchange="toggleWhatsApp()">
+            <option value="page">Go to 'Yay' Page (yes.html)</option>
+            <option value="whatsapp">Open WhatsApp Chat</option>
+        </select>
+
+        <div id="wa-section" style="display:none;">
+            <label>Your Phone Number (Country Code + Number):</label>
+            <input type="number" id="phone" placeholder="e.g., 818012345678">
+            <label>Message they will send you:</label>
+            <input type="text" id="waMessage" value="Yes! I would love to go out with you! ❤️">
+        </div>
+
+        <button onclick="generateLink()">Generate Link</button>
+        
+        <div id="result">
+            <p><strong>Send this link:</strong></p>
+            <a id="finalLink" href="#" target="_blank">Link will appear here...</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleWhatsApp() {
+            const type = document.getElementById('type').value;
+            document.getElementById('wa-section').style.display = type === 'whatsapp' ? 'block' : 'none';
+        }
+
+        function generateLink() {
+            // Assumes admin.html and index.html are in the same folder
+            const baseUrl = window.location.href.replace('admin.html', 'index.html');
+            
+            const q = encodeURIComponent(document.getElementById('question').value);
+            const y = encodeURIComponent(document.getElementById('yesText').value);
+            const n = encodeURIComponent(document.getElementById('noText').value);
+            const t = document.getElementById('type').value;
+            
+            let url = `${baseUrl}?q=${q}&y=${y}&n=${n}&t=${t}`;
+
+            if (t === 'whatsapp') {
+                const p = document.getElementById('phone').value;
+                const m = encodeURIComponent(document.getElementById('waMessage').value);
+                url += `&p=${p}&m=${m}`;
+            }
+
+            const linkBox = document.getElementById('finalLink');
+            const resultDiv = document.getElementById('result');
+            linkBox.href = url;
+            linkBox.innerText = url;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
